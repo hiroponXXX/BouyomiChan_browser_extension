@@ -1,0 +1,27 @@
+{
+  "name": "HighChat2Boyomi Transfer",
+  "version": "1.0.3",
+  "manifest_version": 2,
+  "description": "配信チャットのコメントデータを棒読みちゃんにWebsocketプラグイン経由で転送します。",
+  "icons": {
+    "48":"icon.png"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "permissions": ["storage"],
+  "content_scripts": [{
+    "matches": ["*://*.ikasekai.com/highchat/live/*"],
+    "js": [
+      "content.js"
+    ]
+  }],
+  "page_action": {
+    "default_icon": {
+      "48": "icon.png"
+    }
+  }
+}

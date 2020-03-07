@@ -1,0 +1,1 @@
+# BouyomiChan_browser_extension
