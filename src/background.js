@@ -3,10 +3,10 @@ console.log("background.js");
 //ChromeとFirefoxでruntime切替
 if(typeof browser !== 'undefined'){
 	ext_runtime = browser.runtime;
-	ext_pageAction = browser.pageAction;
+	ext_pageAction = browser.action;
 }else{
 	ext_runtime = chrome.runtime;
-	ext_pageAction = chrome.pageAction;
+	ext_pageAction = chrome.action;
 }
 ext_runtime.onMessage.addListener(handleMessage);
 
@@ -37,7 +37,7 @@ function handleMessage(request, sender, sendResponse) {
 	if(typeof request.readtext !== 'undefined'){
 		boyomi(request.readtext)
 	}else if(typeof request.pageAction_show !== 'undefined'){
-		ext_pageAction.show(sender.tab.id);
+		ext_pageAction.enable(sender.tab.id);
 	}
 	sendResponse({response: "Response from background script",tabid:sender.tab.id});
 }
