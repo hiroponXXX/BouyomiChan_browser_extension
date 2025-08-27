@@ -16,10 +16,17 @@ var speak_on_activate = true;
 
 
 /* function */
-function extension_boyomi(readtext){
-	var sending = ext_runtime.sendMessage({
-		readtext: readtext
-	});
+function extension_boyomi(readtext, retryCount = 0) {
+    ext_runtime.sendMessage({ readtext: readtext })
+        .catch((e) => {
+            console.error("sendMessage error:", e);
+			// manifest v3では、service workerはアイドル状態になると自動で停止するため、最大3回リトライするようにしている
+            if (retryCount < 2) { 
+                setTimeout(() => {
+                    extension_boyomi(readtext, retryCount + 1);
+                }, 500); // 0.5秒後に再試行
+            }
+        });
 }
 
 function start_obserb(){
