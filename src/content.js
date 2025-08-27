@@ -1,18 +1,21 @@
 console.log('content.js');
 /* define */
 
+let ext_runtime;
+let ext_storage;
+
 //外部プラグインを使用するかのチェックボックスのID checkedが入っていたら棒読みちゃん連携プラグインにデータを渡す
-var str_option_input_external_id = 'highchat_comment__util_read_external';
+let str_option_input_external_id = 'highchat_comment__util_read_external';
 
 //外部プラグインについての説明文　外部プラグインがブラウザに導入されていたら非表示にする。
-var str_option_guide_external_id = 'highchat_comment__util_read_external_guide';
+let str_option_guide_external_id = 'highchat_comment__util_read_external_guide';
 
 // 外部プラグインに渡すテキストの監視対象htmlID
 // 監視対象に変化があったら（MutationObserverが検知したら）内容物のテキストを棒読みちゃん連携プラグインにデータを渡す
-var observe_target_id = 'ext_readtext';
+let observe_target_id = 'ext_readtext';
 
 // オプション値
-var speak_on_activate = true;
+let speak_on_activate = true;
 
 
 /* function */

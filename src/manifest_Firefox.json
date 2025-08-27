@@ -2,12 +2,17 @@
   "name": "HighChat2Boyomi Transfer",
   "version": "2.0.0",
   "manifest_version": 3,
+  "browser_specific_settings":{
+    "gecko": {
+      "id": "{551f9090-146e-4e3e-8ae1-825e2a2c08ff}"
+    }
+  },
   "description": "配信チャットのコメントデータを棒読みちゃんにWebsocketプラグイン経由で転送します。",
   "icons": {
     "48":"icon.png"
   },
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"]
   },
   "options_ui": {
     "page": "options.html"

@@ -1,3 +1,6 @@
+let ext_runtime;
+let ext_storage;
+
 if(typeof browser !== 'undefined'){
 	ext_runtime = browser.runtime;
 	ext_storage = browser.storage.local
