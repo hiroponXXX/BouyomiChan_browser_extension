@@ -20,14 +20,26 @@ let speak_on_activate = true;
 
 /* function */
 function extension_boyomi(readtext, retryCount = 0) {
+    // browser/chromeのAPIは非同期なので、念のためext_runtimeが定義されているか確認
+    if (!ext_runtime || !ext_runtime.sendMessage) {
+        console.error("Extension runtime is not available.");
+        return;
+    }
+
     ext_runtime.sendMessage({ readtext: readtext })
         .catch((e) => {
-            console.error("sendMessage error:", e);
-			// manifest v3では、service workerはアイドル状態になると自動で停止するため、最大3回リトライするようにしている
-            if (retryCount < 2) { 
+            // エラーメッセージにコンテキスト無効、または接続先不在を示す文字列が含まれているか確認
+            const isContextError = e.message.includes("context invalidated") || e.message.includes("Receiving end does not exist");
+            
+            // コンテキストエラーであり、かつリトライ回数が上限未満の場合のみ再試行
+            if (isContextError && retryCount < 2) {
+                console.warn(`sendMessage failed, retrying... (Attempt ${retryCount + 1})`, e.message);
                 setTimeout(() => {
                     extension_boyomi(readtext, retryCount + 1);
                 }, 500); // 0.5秒後に再試行
+            } else {
+                // その他のエラー、またはリトライ上限に達した場合はエラーを出力して終了
+                console.error("sendMessage error (giving up):", e);
             }
         });
 }
